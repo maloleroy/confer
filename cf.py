@@ -7,8 +7,8 @@ import argparse
 import subprocess
 
 # CHANGE THIS TO CONFER INSTALLATION DIRECTORY
-confer_include = "/home/malo/Bureau/confer/src/"
-confer_obj = "/home/malo/Bureau/confer/obj/confer.o"
+confer_include = "$(CONFER_PATH)/src"
+confer_obj = "$(CONFER_PATH)/obj/confer.o"
 
 test_main = "test/test.c"
 test_bin = "./bin/test"
@@ -88,6 +88,7 @@ def makefile_content(name: str, obj_list, sdl: bool, lib: bool):
     )
     return (
         warning
+        + f"CONFER_PATH ?= ~/.local/share/confer\n"
         + f"""CC = gcc\n.PHONY : clean\n
 OBJ_FILES = {' '.join(map(o_file, obj_list))}
 TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n

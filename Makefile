@@ -1,4 +1,5 @@
 # AUTOMATICALLY GENERATED FILE. MODIFY WITH CAUTION.
+CONFER_PATH ?= ~/.local/share/confer
 CC = gcc
 .PHONY : clean
 
@@ -17,8 +18,8 @@ obj/%.o: src/%.c
 	@echo "🔨 $< -> $@"
 	@$(CC) -I./src -c $< -o $@ $(CFLAGS)
 
-bin/test: test/test.c $(OBJ_FILES)
-	@$(CC) "test/test.c" /home/malo/Bureau/confer/obj/confer.o $(OBJ_FILES) $(CFLAGS) -I./test -I/home/malo/Bureau/confer/src/ -o "bin/test"
+./bin/test: test/test.c $(OBJ_FILES)
+	@$(CC) "test/test.c" $(OBJ_FILES) $(CFLAGS) -I./test -I$(CONFER_PATH)/src -o "./bin/test"
 
 clean:
 	rm ${TARGETS}

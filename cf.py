@@ -25,6 +25,10 @@ def warning(msg: str):
 
 def main():
     args = get_args()
+    if not hasattr(args, "func"):
+        print("No action specified.")
+        print("Use `cf --help` for more information.")
+        sys.exit()
     args.func(args)
 
 

@@ -3,8 +3,6 @@
 
 #include "build.h"
 
-unsigned int TAB_SIZE;
-
 #define cfPrintCallTree() printTree(&node_main);
 #define cfPrintResults() _cfPrintResults(self)
 #define cfReturnCode() _cfReturnCode(&node_main)

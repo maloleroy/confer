@@ -149,7 +149,7 @@ def is_lib():
 def init_git_repo():
     if not path.isdir(".git"):
         try:
-            subprocess.run(["/usr/bin/git", "init"], check=True)
+            subprocess.run("git init", check=True, shell=True)
         except subprocess.CalledProcessError:
             error("could not create git repository")
     else:
@@ -165,13 +165,13 @@ def test(args):
 
 def compile_tests():
     try:
-        subprocess.run(["/usr/bin/make", test_bin], check=True)
+        subprocess.run(f"make {test_bin}", check=True, shell=True)
     except subprocess.CalledProcessError:
         error(f"could not make {test_bin}")
 
 
 def run_tests():
-    subprocess.run([test_bin], check=False)
+    subprocess.run(test_bin, check=False)
 
 
 def add_obj(args):
@@ -213,7 +213,7 @@ def create_c_file_if_not(name: str):
 
 
 def clean(_):
-    subprocess.run(["/usr/bin/make", "clean"], check=False)
+    subprocess.run(f"make clean", check=False, shell=True)
 
 
 def run(args):
@@ -221,7 +221,7 @@ def run(args):
     if is_lib():
         error("cannot run a library")
     try:
-        subprocess.run(["/usr/bin/make", f"./bin/{name}"], check=True)
+        subprocess.run(f"make ./bin/{name}", check=True, shell=True)
     except subprocess.CalledProcessError:
         error("cannot compile using make")
     if not args.just_compile:

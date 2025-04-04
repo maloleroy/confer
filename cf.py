@@ -130,6 +130,7 @@ def get_obj_list():
                         r.append(j[4:-2])
                     else:
                         warning("ignoring " + j)
+                r.sort()
                 return r
         error("could not find OBJ_FILES in Makefile")
 
@@ -301,9 +302,11 @@ def is_makefile_synchronized():
 
 def guess_obj_list():
     trim = lambda s: s[4:-2]
-    h_list = map(trim, glob("src/*.h"))
-    c_list = map(trim, glob("src/*.c"))
-    return [i for i in h_list if i in c_list]
+    h_list = list(map(trim, glob("src/*.h")))
+    c_list = list(map(trim, glob("src/*.c")))
+    o_list = [i for i in h_list if i in c_list]
+    o_list.sort()
+    return o_list
 
 
 def sync(args):

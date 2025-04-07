@@ -38,10 +38,9 @@ void test_my_function(CFTEST) { // make it a test
 
 ## What next?
 
-To know more about the library, we also recommend you visiting Confer's [documentation](https://github.com/Firefnix/confer/tree/main/docs). For a fast overview of Confer's capacity, you can also check the [example](https://github.com/Firefnix/confer/tree/main/examples/calc).
+To know more about the library, we also recommend you visiting Confer's [documentation](https://github.com/maloleroy/confer/tree/main/docs). For a fast overview of Confer's capacity, you can also check the [example](https://github.com/maloleroy/confer/tree/main/examples/calc).
 
 ## Where can I get help?
 
-Feel free to open issues on the [Github Repo](https://github.com/Firefnix/confer), especially if
-you did not find an answer to a question in our documentation. You can also reach out directly to
-the maintainer via email at firefnix@gmail.com.
+Feel free to open issues on the [Github Repo](https://github.com/maloleroy/confer), especially if
+you did not find an answer to a question in our documentation.

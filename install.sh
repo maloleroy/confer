@@ -14,6 +14,14 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
+make_lib_object() {
+    # Make the library objects
+    make obj/confer.o || {
+        echo -e "${color_red}Failed to make the library objects. Please check your installation.${color_none}"
+        exit 1
+    }
+}
+
 # Check if env variables are already set
 if [ -n "$CONFER_PATH" ]; then
     if [ ! -d "$CONFER_PATH/.git" ]; then
@@ -33,6 +41,7 @@ if [ -n "$CONFER_PATH" ]; then
             echo "${color_none}${color_red}Failed to update the repository. Please check your internet connection and try again.${color_none}"
             exit 1
         }
+        make_lib_object
         echo -e "\n${color_none}${color_bold_green}Confer updated to version ${CONFER_COMMIT}${color_none}"
         exit 0
     else
@@ -103,6 +112,8 @@ git clone ${REPO_URL} . || {
     echo "Failed to clone the repository. Please check your internet connection and try again."
     exit 1
 }
+
+make_lib_object
 
 COMMIT=$(git rev-parse HEAD | cut -c 1-7)
 

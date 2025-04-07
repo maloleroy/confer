@@ -15,10 +15,12 @@ obj/confer.o: $(OBJ_FILES)
 	@ld -r $(OBJ_FILES) -o $@
 
 obj/%.o: src/%.c
+	@mkdir -p obj
 	@echo "🔨 $< -> $@"
 	@$(CC) -I./include -c $< -o $@ $(CFLAGS)
 
 ./bin/test: test/test.c $(OBJ_FILES)
+	@mkdir -p bin
 	@$(CC) "test/test.c" $(OBJ_FILES) $(CFLAGS) -I./test -I$(CONFER_PATH)/include -o "./bin/test"
 
 clean:

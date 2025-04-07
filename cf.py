@@ -5,14 +5,56 @@ from os import mkdir, remove, getcwd, chdir, path
 from glob import glob
 import argparse
 import subprocess
+from types import SimpleNamespace
 
 # CHANGE THIS TO CONFER INSTALLATION DIRECTORY
-confer_include = "$(CONFER_PATH)/src"
+confer_include = "$(CONFER_PATH)/include"
 confer_obj = "$(CONFER_PATH)/obj/confer.o"
 
 test_main = "test/test.c"
 test_bin = "./bin/test"
 
+defaults = SimpleNamespace(
+    confer_path = "~/.local/share/confer",
+    lib_obj_name = "add",
+    lib_obj_header = "int add(int a, int b);\n",
+    lib_obj_source = """#include <add.h>\n
+int add(int a, int b) {
+    return a + b;
+}
+""",
+    main_source = """#include <stdio.h>
+#include <add.h>
+
+int main(void) {
+    printf("Hello world!\\n1 + 2 = %d\\n", add(1, 2));
+    return 0;
+}
+""",
+    main_header = """#ifndef {project_name_upper}_H
+#define {project_name_upper}_H
+
+#include <add.h>
+
+#endif
+""",
+    test_source = """#include <confer.h>
+#include <add.h>
+
+void test_add(CFTEST) { // make it a test
+  assertIntEqual(add(1, 2), 3);
+}
+
+int main(void) {
+    cfInit();
+
+    cfTest(test_add); // call subtests
+
+    cfPrintCallTree();
+    return cfReturnCode();
+}
+""",
+)
 
 def error(msg: str):
     print("Error: " + msg)
@@ -35,19 +77,24 @@ def main():
 def get_project_name():
     return getcwd().split("/")[-1]
 
-
 def create(args):
     print(f"Creating project '{args.name}'")
     create_dir_if_not(args.name)
     chdir(args.name)
-    for i in ["src", "test", "obj", "bin"]:
+    for i in ["src", "test", "obj", "bin", "include"]:
         create_dir_if_not(i)
-    if not args.lib:
-        create_file_with_main_if_not(c_file(args.name))
-    create_file_with_main_if_not(test_main, include_confer=True)
+    if args.lib:
+        create_file_if_not(h_file(args.name), defaults.main_header.format(project_name_upper=args.name.upper()))
+    else:
+        create_file_if_not(c_file(args.name), defaults.main_source)
+    create_file_if_not(h_file(defaults.lib_obj_name), defaults.lib_obj_header)
+    create_file_if_not(c_file(defaults.lib_obj_name), defaults.lib_obj_source)
+    create_file_if_not(test_main, defaults.test_source)
     if args.git:
         init_git_repo()
-    create_makefile_or_fail(args)
+    with open("Makefile", "w", encoding="utf8") as f:
+        f.write(makefile_content(args.name, [defaults.lib_obj_name], args.sdl, args.lib))
+    # create_makefile_or_fail(args)
 
 
 def create_dir_if_not(dir_path):
@@ -55,10 +102,7 @@ def create_dir_if_not(dir_path):
         mkdir(dir_path)
 
 
-def create_file_with_main_if_not(file_path, include_confer=False):
-    content = "int main(int argc, char *argv[]) {\n\n    return 0;\n}"
-    if include_confer:
-        content = "#include <confer.h>\n\nint main(int argc, char *argv[]) {\n    cfInit();\n\n    cfPrintCallTree();\n    return cfReturnCode();\n}"
+def create_file_if_not(file_path: str, content: str):
     if not path.isfile(file_path):
         with open(file_path, "x", encoding="utf8") as f:
             f.write(content)
@@ -92,7 +136,7 @@ def makefile_content(name: str, obj_list, sdl: bool, lib: bool):
     )
     return (
         warning
-        + f"CONFER_PATH ?= ~/.local/share/confer\n"
+        + f"CONFER_PATH ?= ${defaults.confer_path}\n"
         + f"""CC = gcc\n.PHONY : clean\n
 OBJ_FILES = {' '.join(map(o_file, obj_list))}
 TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n
@@ -100,7 +144,7 @@ TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n
 {bin_or_obj_if_lib}
 \nobj/%.o: src/%.c
 \t@echo "🔨 $< -> $@"
-\t@$(CC) -I./src -c $< -o $@ $(CFLAGS)
+\t@$(CC) -I./include -c $< -o $@ $(CFLAGS)
 \n{test_bin}: {test_main} $(OBJ_FILES)
 \t@$(CC) "{test_main}" {confer_obj} $(OBJ_FILES) $(CFLAGS) -I./test -I{confer_include} -o "{test_bin}"\n\n"""
         + clean
@@ -108,7 +152,7 @@ TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n
 
 
 def get_flags(sdl: bool):
-    flags = "CC_OPTIONS = -pedantic\nCC_INCLUDE = -I./src\nWARN = -Wall -Wextra\n"
+    flags = "CC_OPTIONS = -pedantic\nCC_INCLUDE = -I./include\nWARN = -Wall -Wextra\n"
     if sdl:
         flags += "SDL2_FLAGS = $(shell sdl2-config --cflags --libs)\nCFLAGS = $(CC_INCLUDE) $(CC_OPTIONS) $(SDL2_FLAGS) $(WARN)"
     else:
@@ -186,7 +230,7 @@ def add_obj(args):
 
 
 def h_file(name: str) -> str:
-    return f"src/{name}.h"
+    return f"include/{name}.h"
 
 
 def c_file(name: str) -> str:
@@ -301,9 +345,8 @@ def is_makefile_synchronized():
 
 
 def guess_obj_list():
-    trim = lambda s: s[4:-2]
-    h_list = list(map(trim, glob("src/*.h")))
-    c_list = list(map(trim, glob("src/*.c")))
+    h_list = list(map(lambda s: s[8:-2], glob("include/*.h")))
+    c_list = list(map(lambda s: s[4:-2], glob("src/*.c")))
     o_list = [i for i in h_list if i in c_list]
     o_list.sort()
     return o_list

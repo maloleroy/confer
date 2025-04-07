@@ -1,5 +1,5 @@
 # AUTOMATICALLY GENERATED FILE. MODIFY WITH CAUTION.
-CONFER_PATH ?= ~/.local/share/confer
+CONFER_PATH ?= $~/.local/share/confer
 CC = gcc
 .PHONY : clean
 
@@ -7,7 +7,7 @@ OBJ_FILES = obj/assertions.o obj/build.o obj/children.o obj/print.o
 TARGETS =  $(OBJ_FILES)
 
 CC_OPTIONS = -pedantic
-CC_INCLUDE = -I./src
+CC_INCLUDE = -I./include
 WARN = -Wall -Wextra
 CFLAGS = $(CC_INCLUDE) $(CC_OPTIONS) $(WARN)
 obj/confer.o: $(OBJ_FILES)
@@ -16,10 +16,10 @@ obj/confer.o: $(OBJ_FILES)
 
 obj/%.o: src/%.c
 	@echo "🔨 $< -> $@"
-	@$(CC) -I./src -c $< -o $@ $(CFLAGS)
+	@$(CC) -I./include -c $< -o $@ $(CFLAGS)
 
 ./bin/test: test/test.c $(OBJ_FILES)
-	@$(CC) "test/test.c" $(OBJ_FILES) $(CFLAGS) -I./test -I$(CONFER_PATH)/src -o "./bin/test"
+	@$(CC) "test/test.c" $(OBJ_FILES) $(CFLAGS) -I./test -I$(CONFER_PATH)/include -o "./bin/test"
 
 clean:
 	rm ${TARGETS}

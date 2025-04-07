@@ -131,6 +131,7 @@ def makefile_content(name: str, obj_list, sdl: bool, lib: bool):
 \t@ld -r $(OBJ_FILES) -o $@"""
         if lib
         else f"""\nbin/{name}: {c_file(name)} $(OBJ_FILES)
+\t@mkdir -p bin
 \t@echo "⚙ {c_file(name)} $(OBJ_FILES) -> bin/{name}"
 \t@$(CC) {c_file(name)} $(OBJ_FILES) -o bin/{name} $(CFLAGS)"""
     )
@@ -143,9 +144,11 @@ TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n
 {flags}
 {bin_or_obj_if_lib}
 \nobj/%.o: src/%.c
+\t@mkdir -p obj
 \t@echo "🔨 $< -> $@"
 \t@$(CC) -I./include -c $< -o $@ $(CFLAGS)
 \n{test_bin}: {test_main} $(OBJ_FILES)
+\t@mkdir -p bin
 \t@$(CC) "{test_main}" {confer_obj} $(OBJ_FILES) $(CFLAGS) -I./test -I{confer_include} -o "{test_bin}"\n\n"""
         + clean
     )

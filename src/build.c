@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
-void _initScope(struct cfScope *s, const char *name)
+void _init_scope(struct cfScope *s, const char *name)
 {
     static const unsigned int NODE_PREFIX_SIZE = 5;
     strcpy(s->name, name + NODE_PREFIX_SIZE);
@@ -13,7 +13,7 @@ void _initScope(struct cfScope *s, const char *name)
     s->assertions = (struct cfTestsCount){0, 0};
 }
 
-void _cfAddChild(struct cfScope *parent, struct cfScope *child)
+void _cf_add_child(struct cfScope *parent, struct cfScope *child)
 {
     struct cfScope *p;
     unsigned int i = 0;

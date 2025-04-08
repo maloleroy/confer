@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "children.h"
 
-struct cfScope *getParent(struct cfScope *s, unsigned int depth)
+struct cfScope *get_parent(struct cfScope *s, unsigned int depth)
 {
     struct cfScope *p = s;
     for (; p && p->parent && depth; p = p->parent, --depth)
@@ -9,7 +9,7 @@ struct cfScope *getParent(struct cfScope *s, unsigned int depth)
     return p;
 }
 
-int getChildIndex(struct cfScope *s)
+int get_child_index(struct cfScope *s)
 {
     if (s->parent == NULL)
         return -1;
@@ -21,9 +21,9 @@ int getChildIndex(struct cfScope *s)
     return -1;
 }
 
-bool isLastChild(struct cfScope *s)
+bool is_last_child(struct cfScope *s)
 {
-    int index = getChildIndex(s);
+    int index = get_child_index(s);
     if (index == -1)
     {
         fprintf(stderr, "ERROR: Cannot find parent index of node '%s' at %p.\nWARNING: This will probably cause a segmentation fault.\n", s->name, (void *)s);
@@ -32,12 +32,12 @@ bool isLastChild(struct cfScope *s)
     return s->parent->children[index + 1] == NULL;
 }
 
-bool hasChildrenWithErrors(struct cfScope *scope)
+bool has_children_with_errors(struct cfScope *scope)
 {
-    return (countChildrenFailed(scope) != 0);
+    return (count_children_failed(scope) != 0);
 }
 
-unsigned int countChildren(struct cfScope *scope)
+unsigned int count_children(struct cfScope *scope)
 {
     unsigned int c = 0;
     for (unsigned int i = 0; i < CF_MAX_CHILDREN; ++i)
@@ -48,7 +48,7 @@ unsigned int countChildren(struct cfScope *scope)
     return c;
 }
 
-unsigned int countChildrenPassed(struct cfScope *scope)
+unsigned int count_children_passed(struct cfScope *scope)
 {
     unsigned int c = 0;
     for (unsigned int i = 0; i < CF_MAX_CHILDREN; ++i)
@@ -59,7 +59,7 @@ unsigned int countChildrenPassed(struct cfScope *scope)
     return c;
 }
 
-unsigned int countChildrenFailed(struct cfScope *scope)
+unsigned int count_children_failed(struct cfScope *scope)
 {
     unsigned int c = 0;
     for (unsigned int i = 0; i < CF_MAX_CHILDREN; ++i)
@@ -70,7 +70,7 @@ unsigned int countChildrenFailed(struct cfScope *scope)
     return c;
 }
 
-unsigned int countAssertionsPassed(struct cfScope *scope)
+unsigned int count_assertions_passed(struct cfScope *scope)
 {
     unsigned int sum = 0;
     for (unsigned int i = 0; i < CF_MAX_CHILDREN; ++i)
@@ -78,14 +78,14 @@ unsigned int countAssertionsPassed(struct cfScope *scope)
         if (scope->children[i] != NULL)
         {
             sum += scope->children[i]->assertions.passed;
-            if (countChildren(scope->children[i]))
-                sum += countAssertionsPassed(scope->children[i]);
+            if (count_children(scope->children[i]))
+                sum += count_assertions_passed(scope->children[i]);
         }
     }
     return sum;
 }
 
-unsigned int countAssertionsFailed(struct cfScope *scope)
+unsigned int count_assertions_failed(struct cfScope *scope)
 {
     unsigned int sum = 0;
     for (unsigned int i = 0; i < CF_MAX_CHILDREN; ++i)
@@ -93,8 +93,8 @@ unsigned int countAssertionsFailed(struct cfScope *scope)
         if (scope->children[i] != NULL)
         {
             sum += scope->children[i]->assertions.failed;
-            if (countChildren(scope->children[i]))
-                sum += countAssertionsFailed(scope->children[i]);
+            if (count_children(scope->children[i]))
+                sum += count_assertions_failed(scope->children[i]);
         }
     }
     return sum;

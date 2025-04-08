@@ -42,16 +42,16 @@ int main(void) {
 #include <add.h>
 
 void test_add(CFTEST) { // make it a test
-  assertIntEqual(add(1, 2), 3);
+  assert_int_equal(add(1, 2), 3);
 }
 
 int main(void) {
-    cfInit();
+    cf_init();
 
-    cfTest(test_add); // call subtests
+    cf_test(test_add); // call subtests
 
-    cfPrintCallTree();
-    return cfReturnCode();
+    cf_print_call_tree();
+    return cf_return_code();
 }
 """,
 )

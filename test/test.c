@@ -6,19 +6,19 @@ void test_return_value(CFTEST);
 
 int main(void)
 {
-    cfInit();
-    cfTest(test_assertions);
-    cfTest(test_return_value);
-    cfPrintCallTree();
-    cfPrintResults();
+    cf_init();
+    cf_test(test_assertions);
+    cf_test(test_return_value);
+    cf_print_call_tree();
+    cf_print_results();
     return 0;
 }
 
 void test_return_value(CFTEST)
 {
-    if (assertTrue(true))
+    if (assert_true(true))
     {
-        assertNull(NULL); // ok, great
+        assert_null(NULL); // ok, great
     }
     /* Works well, but commented because it outputs a failed assertion
     (as expected)

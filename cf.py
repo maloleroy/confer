@@ -137,7 +137,7 @@ def makefile_content(name: str, obj_list, sdl: bool, lib: bool):
     )
     return (
         warning
-        + f"CONFER_PATH ?= ${defaults.confer_path}\n"
+        + f"CONFER_PATH ?= {defaults.confer_path}\n"
         + f"""CC = gcc\n.PHONY : clean\n
 OBJ_FILES = {' '.join(map(o_file, obj_list))}
 TARGETS = {'' if lib else f'bin/{name}'} $(OBJ_FILES)\n

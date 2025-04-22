@@ -80,13 +80,13 @@ Now our `test/test.c` file looks like this:
 #include <operations.h>
 
 int main(void) {
-    cfInit();
-    cfPrintCallTree();
+    cf_tnit();
+    cf_print_call_tree();
     return 0;
 }
 ```
 
-Now we can write our test: from `main`, we will call the subtest `test_operations`, that will itself call `test_plus`. Calling a subtest from a function is easy, we just have to use the `cfTest` function. Once this is done, our `test/test.c` file will look like this:
+Now we can write our test: from `main`, we will call the subtest `test_operations`, that will itself call `test_plus`. Calling a subtest from a function is easy, we just have to use the `cf_test` function. Once this is done, our `test/test.c` file will look like this:
 ```c
 #include <confer.h>
 #include <operations.h>
@@ -95,13 +95,13 @@ void test_operations(CFTEST);
 void test_plus(CFTEST);
 
 int main(void) {
-    cfInit();
-    cfTest(test_operations);
-    cfPrintCallTree();
+    cf_init();
+    cf_test(test_operations);
+    cf_print_call_tree();
     return 0;
 }
 
-void test_operations(CFTEST) { cfTest(test_plus); }
+void test_operations(CFTEST) { cf_test(test_plus); }
 
 void test_plus(CFTEST) {}
 ```
@@ -113,8 +113,8 @@ For a better readability, place the functions' signature on top of the file.
 Finally, we can test our `plus` function using Confer's built-in assertions:
 ```c
 void test_plus(CFTEST) {
-    assertIntEqual(plus(1, 2), 3);
-    assertIntNotEqual(plus(1, -2), 0);
+    assert_int_equal(plus(1, 2), 3);
+    assert_int_not_equal(plus(1, -2), 0);
 }
 ```
 

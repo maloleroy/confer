@@ -17,15 +17,15 @@ struct cfScope
     struct cfTestsCount assertions;
 };
 
-#define initScope(s) _initScope(&s, #s)
+#define init_scope(s) _init_scope(&s, #s)
 
-#define initRootScope()          \
+#define init_root_scope()          \
     struct cfScope node_main;    \
-    initScope(node_main);        \
+    init_scope(node_main);        \
     static struct cfScope *self; \
     self = &node_main
 
-void _initScope(struct cfScope *s, const char *name);
-void _cfAddChild(struct cfScope *parent, struct cfScope *child);
+void _init_scope(struct cfScope *s, const char *name);
+void _cf_add_child(struct cfScope *parent, struct cfScope *child);
 
 #endif

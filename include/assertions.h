@@ -3,74 +3,74 @@
 #include <stdbool.h>
 #include "build.h"
 
-#define assertIsNull assertNull
-#define assertIsNotNull assertNotNull
+#define assert_is_null assert_null
+#define assertIsNotNull assert_not_null
 #define _ASSERT_ARGS struct cfScope *scope, unsigned int line, const char *file
 #define ASSERT_ARGS self, __LINE__, __FILE__
 
-int _assertTrue(bool b, _ASSERT_ARGS);
-int _assertFalse(bool b, _ASSERT_ARGS);
+int _assert_true(bool b, _ASSERT_ARGS);
+int _assert_false(bool b, _ASSERT_ARGS);
 
-int _assertNull(void *p, _ASSERT_ARGS);
-int _assertNotNull(void *p, _ASSERT_ARGS);
-int _assertPointerEqual(const void *p1, const void *p2, _ASSERT_ARGS);
-int _assertPointerNotEqual(const void *p1, const void *p2, _ASSERT_ARGS);
+int _assert_null(void *p, _ASSERT_ARGS);
+int _assert_not_null(void *p, _ASSERT_ARGS);
+int _assert_pointer_equal(const void *p1, const void *p2, _ASSERT_ARGS);
+int _assert_pointer_not_equal(const void *p1, const void *p2, _ASSERT_ARGS);
 
-int _assertZero(int x, _ASSERT_ARGS);
-int _assertNonZero(int x, _ASSERT_ARGS);
-int _assertIntEqual(int x, int y, _ASSERT_ARGS);
-int _assertIntNotEqual(int x, int y, _ASSERT_ARGS);
+int _assert_zero(int x, _ASSERT_ARGS);
+int _assert_non_zero(int x, _ASSERT_ARGS);
+int _assert_int_equal(int x, int y, _ASSERT_ARGS);
+int _assert_int_not_equal(int x, int y, _ASSERT_ARGS);
 
-int _assertIntGe(int x, int y, _ASSERT_ARGS);
-int _assertIntLe(int x, int y, _ASSERT_ARGS);
-int _assertIntGreater(int x, int y, _ASSERT_ARGS);
-int _assertIntLess(int x, int y, _ASSERT_ARGS);
-int _assertIntNonNegative(int x, _ASSERT_ARGS);
-int _assertIntNonPositive(int x, _ASSERT_ARGS);
-int _assertIntPositive(int x, _ASSERT_ARGS);
-int _assertIntNegative(int x, _ASSERT_ARGS);
+int _assert_int_ge(int x, int y, _ASSERT_ARGS);
+int _assert_int_le(int x, int y, _ASSERT_ARGS);
+int _assert_int_greater(int x, int y, _ASSERT_ARGS);
+int _assert_int_less(int x, int y, _ASSERT_ARGS);
+int _assert_int_non_negative(int x, _ASSERT_ARGS);
+int _assert_int_non_positive(int x, _ASSERT_ARGS);
+int _assert_int_positive(int x, _ASSERT_ARGS);
+int _assert_int_negative(int x, _ASSERT_ARGS);
 
-int _assertCharEqual(char c1, char c2, _ASSERT_ARGS);
-int _assertCharNotEqual(char c1, char c2, _ASSERT_ARGS);
+int _assert_char_equal(char c1, char c2, _ASSERT_ARGS);
+int _assert_char_not_equal(char c1, char c2, _ASSERT_ARGS);
 
-int _assertByteEqual(unsigned char b1, unsigned char b2, _ASSERT_ARGS);
-int _assertByteNotEqual(unsigned char b1, unsigned char b2, _ASSERT_ARGS);
+int _assert_byte_equal(unsigned char b1, unsigned char b2, _ASSERT_ARGS);
+int _assert_byte_not_equal(unsigned char b1, unsigned char b2, _ASSERT_ARGS);
 
-int _assertStringEqual(const char *s1, const char *s2, _ASSERT_ARGS);
-int _assertStringNotEqual(const char *s1, const char *s2, _ASSERT_ARGS);
+int _assert_string_equal(const char *s1, const char *s2, _ASSERT_ARGS);
+int _assert_string_not_equal(const char *s1, const char *s2, _ASSERT_ARGS);
 
-int _assertTrueChain(bool b, _ASSERT_ARGS);
-int _assertFalseChain(bool b, _ASSERT_ARGS);
+int _assert_true_chain(bool b, _ASSERT_ARGS);
+int _assert_false_chain(bool b, _ASSERT_ARGS);
 
-#define assertTrue(b) _assertTrue(b, ASSERT_ARGS)
-#define assertFalse(b) _assertFalse(b, ASSERT_ARGS)
+#define assert_true(b) _assert_true(b, ASSERT_ARGS)
+#define assert_false(b) _assert_false(b, ASSERT_ARGS)
 
-#define assertNull(p) _assertNull(p, ASSERT_ARGS)
-#define assertNotNull(p) _assertNotNull(p, ASSERT_ARGS)
-#define assertPointerEqual(p1, p2) _assertPointerEqual(p1, p2, ASSERT_ARGS)
-#define assertPointerNotEqual(p1, p2) _assertPointerNotEqual(p1, p2, ASSERT_ARGS)
+#define assert_null(p) _assert_null(p, ASSERT_ARGS)
+#define assert_not_null(p) _assert_not_null(p, ASSERT_ARGS)
+#define assert_pointer_equal(p1, p2) _assert_pointer_equal(p1, p2, ASSERT_ARGS)
+#define assert_pointer_not_equal(p1, p2) _assert_pointer_not_equal(p1, p2, ASSERT_ARGS)
 
-#define assertZero(x) _assertZero(x, ASSERT_ARGS)
-#define assertNonZero(x) _assertNonZero(x, ASSERT_ARGS)
-#define assertIntEqual(x, y) _assertIntEqual(x, y, ASSERT_ARGS)
-#define assertIntNotEqual(x, y) _assertIntNotEqual(x, y, ASSERT_ARGS)
+#define assert_zero(x) _assert_zero(x, ASSERT_ARGS)
+#define assert_non_zero(x) _assert_non_zero(x, ASSERT_ARGS)
+#define assert_int_equal(x, y) _assert_int_equal(x, y, ASSERT_ARGS)
+#define assert_int_not_equal(x, y) _assert_int_not_equal(x, y, ASSERT_ARGS)
 
-#define assertIntGe(x, y) _assertIntGe(x, y, ASSERT_ARGS)
-#define assertIntLe(x, y) _assertIntLe(x, y, ASSERT_ARGS)
-#define assertIntGreater(x, y) _assertIntGreater(x, y, ASSERT_ARGS)
-#define assertIntLess(x, y) _assertIntLess(x, y, ASSERT_ARGS)
-#define assertIntNonNegative(x) _assertIntNonNegative(x, ASSERT_ARGS)
-#define assertIntNonPositive(x) _assertIntNonPositive(x, ASSERT_ARGS)
-#define assertIntPositive(x) _assertIntPositive(x, ASSERT_ARGS)
-#define assertIntNegative(x) _assertIntNegative(x, ASSERT_ARGS)
+#define assert_int_ge(x, y) _assert_int_ge(x, y, ASSERT_ARGS)
+#define assert_int_le(x, y) _assert_int_le(x, y, ASSERT_ARGS)
+#define assert_int_greater(x, y) _assert_int_greater(x, y, ASSERT_ARGS)
+#define assert_int_less(x, y) _assert_int_less(x, y, ASSERT_ARGS)
+#define assert_int_non_negative(x) _assert_int_non_negative(x, ASSERT_ARGS)
+#define assert_int_non_positive(x) _assert_int_non_positive(x, ASSERT_ARGS)
+#define assert_int_positive(x) _assert_int_positive(x, ASSERT_ARGS)
+#define assert_int_negative(x) _assert_int_negative(x, ASSERT_ARGS)
 
-#define assertCharEqual(x, y) _assertCharEqual(x, y, ASSERT_ARGS)
-#define assertCharNotEqual(x, y) _assertCharNotEqual(x, y, ASSERT_ARGS)
+#define assert_char_equal(x, y) _assert_char_equal(x, y, ASSERT_ARGS)
+#define assert_char_not_equal(x, y) _assert_char_not_equal(x, y, ASSERT_ARGS)
 
-#define assertStringEqual(s1, s2) _assertStringEqual(s1, s2, ASSERT_ARGS)
-#define assertStringNotEqual(p1, p2) _assertStringNotEqual(p1, p2, ASSERT_ARGS)
+#define assert_string_equal(s1, s2) _assert_string_equal(s1, s2, ASSERT_ARGS)
+#define assert_string_not_equal(p1, p2) _assert_string_not_equal(p1, p2, ASSERT_ARGS)
 
-#define assertChain(f, ...) _assertTrueChain(f(__VA_ARGS__), ASSERT_ARGS)
-#define assertChainNot(f, ...) _assertFalseChain(f(__VA_ARGS__), ASSERT_ARGS)
+#define assert_chain(f, ...) _assert_true_chain(f(__VA_ARGS__), ASSERT_ARGS)
+#define assert_chain_not(f, ...) _assert_false_chain(f(__VA_ARGS__), ASSERT_ARGS)
 
 #endif

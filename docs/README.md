@@ -25,14 +25,14 @@ Then, after calling the initialization function, you will be able to write your 
 
 ```c
 void main(void) {
-  cfInit(); // nothing more needed
-  cfTest(test_my_function); // call subtests
-  cfPrintCallTree(); // show the results
+  cf_init(); // nothing more needed
+  cf_test(test_my_function); // call subtests
+  cf_print_call_tree(); // show the results
 }
 
 void test_my_function(CFTEST) { // make it a test
-  assertIntEqual(my_function(0), 1);
-  assertIntGreater(my_function(2), 7);
+  assert_int_equal(my_function(0), 1);
+  assert_int_greater(my_function(2), 7);
 }
 ```
 

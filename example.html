@@ -13,16 +13,16 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="/confer/assets/normalize.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/normalize.css?v=1745364819"
         media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/doctave-style.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/doctave-style.css?v=1745364819"
         media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/katex.css?v=1744069118" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/prism-ghcolors.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/katex.css?v=1745364819" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/confer/assets/prism-ghcolors.css?v=1745364819"
         media="screen" />
 
     <script>
-        var DOCTAVE_TIMESTAMP = "1744069118";
+        var DOCTAVE_TIMESTAMP = "1745364819";
         var BASE_PATH = "/confer/";
         var color = localStorage.getItem('doctave-color')
 
@@ -158,12 +158,12 @@ int main(int argc, char *argv[]) {
 #include &lt;operations.h&gt;
 
 int main(void) {
-    cfInit();
-    cfPrintCallTree();
+    cf_tnit();
+    cf_print_call_tree();
     return 0;
 }
 </code></pre>
-<p>Now we can write our test: from <code>main</code>, we will call the subtest <code>test_operations</code>, that will itself call <code>test_plus</code>. Calling a subtest from a function is easy, we just have to use the <code>cfTest</code> function. Once this is done, our <code>test/test.c</code> file will look like this:</p>
+<p>Now we can write our test: from <code>main</code>, we will call the subtest <code>test_operations</code>, that will itself call <code>test_plus</code>. Calling a subtest from a function is easy, we just have to use the <code>cf_test</code> function. Once this is done, our <code>test/test.c</code> file will look like this:</p>
 <pre><code class="language-c">#include &lt;confer.h&gt;
 #include &lt;operations.h&gt;
 
@@ -171,13 +171,13 @@ void test_operations(CFTEST);
 void test_plus(CFTEST);
 
 int main(void) {
-    cfInit();
-    cfTest(test_operations);
-    cfPrintCallTree();
+    cf_init();
+    cf_test(test_operations);
+    cf_print_call_tree();
     return 0;
 }
 
-void test_operations(CFTEST) { cfTest(test_plus); }
+void test_operations(CFTEST) { cf_test(test_plus); }
 
 void test_plus(CFTEST) {}
 </code></pre>
@@ -188,8 +188,8 @@ For a better readability, place the functions' signature on top of the file.
 </div>
 <p>Finally, we can test our <code>plus</code> function using Confer's built-in assertions:</p>
 <pre><code class="language-c">void test_plus(CFTEST) {
-    assertIntEqual(plus(1, 2), 3);
-    assertIntNotEqual(plus(1, -2), 0);
+    assert_int_equal(plus(1, 2), 3);
+    assert_int_not_equal(plus(1, -2), 0);
 }
 </code></pre>
 <h2 id="running-the-tests">Running the tests</h2>
@@ -252,11 +252,11 @@ You can also create new test files and include them to your main <code>test.c</c
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/confer/assets/katex.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/mermaid.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/elasticlunr.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/prism.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/doctave-app.js?v=1744069118"></script>
+    <script type="text/javascript" src="/confer/assets/katex.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/mermaid.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/elasticlunr.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/prism.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/doctave-app.js?v=1745364819"></script>
 
     
     <script type='text/javascript' src="/confer/assets/livereload.js?port=35729" async="" defer=""></script>

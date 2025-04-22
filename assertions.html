@@ -13,16 +13,16 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="/confer/assets/normalize.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/normalize.css?v=1745364819"
         media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/doctave-style.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/doctave-style.css?v=1745364819"
         media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/katex.css?v=1744069118" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/confer/assets/prism-ghcolors.css?v=1744069118"
+    <link rel="stylesheet" type="text/css" href="/confer/assets/katex.css?v=1745364819" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/confer/assets/prism-ghcolors.css?v=1745364819"
         media="screen" />
 
     <script>
-        var DOCTAVE_TIMESTAMP = "1744069118";
+        var DOCTAVE_TIMESTAMP = "1745364819";
         var BASE_PATH = "/confer/";
         var color = localStorage.getItem('doctave-color')
 
@@ -103,19 +103,19 @@
             </div>
             <div class='doctave-content'>
                 <h1 id="assertions">Assertions</h1>
-<p>Confer comes with more than 20 built-in assertions. You can call them from any <code>CFTEST</code> or from your <code>main</code> function. Here is an example with <code>assertIntEqual</code>:</p>
+<p>Confer comes with more than 20 built-in assertions. You can call them from any <code>CFTEST</code> or from your <code>main</code> function. Here is an example with <code>assert_int_equal</code>:</p>
 <pre><code class="language-c">void test_plus(CFTEST) {
-    assertIntEqual(2 + 3, 5);
+    assert_int_equal(2 + 3, 5);
 }
 </code></pre>
 <div class="callout info"><p class="callout-title">Calling subtests</p>
 <p>
-To run tests in <code>test_plus</code>, call it with <code>cfTest(test_plus);</code> from any <code>CFTEST</code> or from your <code>main</code> function.
+To run tests in <code>test_plus</code>, call it with <code>cf_test(test_plus);</code> from any <code>CFTEST</code> or from your <code>main</code> function.
 </p>
 </div>
 <p>Assertions return <code>true</code> if they pass, <code>false</code> if they fail. This return value can be used in conditions to make more tests:</p>
-<pre><code class="language-c">if (assertNotNull(my_car_pointer)) {
-    assertTrue(is_red(*my_car_pointer));
+<pre><code class="language-c">if (assert_not_null(my_car_pointer)) {
+    assert_true(is_red(*my_car_pointer));
 }
 </code></pre>
 <p>This prevents errors like null dereferences or semgentation faults.</p>
@@ -125,90 +125,90 @@ To run tests in <code>test_plus</code>, call it with <code>cfTest(test_plus);</c
 </code></pre>
 <h2 id="built-in-assertions">Built-in assertions</h2>
 <h3 id="booleans">Booleans</h3>
-<pre><code class="language-c">int assertTrue(bool b);
+<pre><code class="language-c">int assert_true(bool b);
 </code></pre>
-<pre><code class="language-c">int assertFalse(bool b);
+<pre><code class="language-c">int assert_false(bool b);
 </code></pre>
 <p>Test that <code>b</code> is true (or false).</p>
 <h3 id="pointers">Pointers</h3>
-<pre><code class="language-c">int assertNull(void *p);
+<pre><code class="language-c">int assert_null(void *p);
 </code></pre>
-<pre><code class="language-c">int assertNotNull(void *p);
+<pre><code class="language-c">int assert_not_null(void *p);
 </code></pre>
 <p>Test that <code>p</code> is (or is not) <code>NULL</code>.</p>
-<pre><code class="language-c">int assertPointerEqual(const void *p1, const void *p2);
+<pre><code class="language-c">int assert_pointer_equal(const void *p1, const void *p2);
 </code></pre>
-<pre><code class="language-c">int assertPointerNotEqual(const void *p1, const void *p2);
+<pre><code class="language-c">int assert_pointer_not_equal(const void *p1, const void *p2);
 </code></pre>
 <p>Test that <code>p1</code> and <code>p2</code> are (or are not) equal.</p>
 <h3 id="integers">Integers</h3>
-<pre><code class="language-c">int assertZero(int x);
+<pre><code class="language-c">int assert_zero(int x);
 </code></pre>
-<pre><code class="language-c">int assertNonZero(int x);
+<pre><code class="language-c">int assert_non_zero(int x);
 </code></pre>
 <p>Test that <code>x</code> is (or is not) equal to <code>0</code>.</p>
-<pre><code class="language-c">int assertIntEqual(int x, int y);
+<pre><code class="language-c">int assert_int_equal(int x, int y);
 </code></pre>
-<pre><code class="language-c">int assertIntNotEqual(int x, int y);
+<pre><code class="language-c">int assert_int_not_equal(int x, int y);
 </code></pre>
 <p>Test that <code>x</code> and <code>y</code> are (or are not) equal.</p>
-<pre><code class="language-c">int assertIntGe(int x, int y);
+<pre><code class="language-c">int assert_int_ge(int x, int y);
 </code></pre>
 <p>Test that <code>x</code> is greater than or equal to <code>y</code> (passes if <code>x &gt;= y</code>).</p>
-<pre><code class="language-c">int assertIntLe(int x, int y);
+<pre><code class="language-c">int assert_int_le(int x, int y);
 </code></pre>
 <p>Test that <code>x</code> is less than or equal to <code>y</code> (passes if <code>x &lt;= y</code>).</p>
-<pre><code class="language-c">int assertIntGreater(int x, int y);
+<pre><code class="language-c">int assert_int_greater(int x, int y);
 </code></pre>
 <p>Test that <code>x</code> is greater than <code>y</code> (passes if <code>x &gt; y</code>).</p>
-<pre><code class="language-c">int assertIntLess(int x, int y);
+<pre><code class="language-c">int assert_int_less(int x, int y);
 </code></pre>
 <p>Test that <code>x</code> is less than <code>y</code> (passes if <code>x &lt; y</code>).</p>
-<pre><code class="language-c">int assertIntNonNegative(int x);
+<pre><code class="language-c">int assert_int_non_negative(int x);
 </code></pre>
 <p>Test that <code>x</code> is non-negative; that is, greater than or equal to <code>0</code> (passes if <code>x &gt;= 0</code>).</p>
-<pre><code class="language-c">int assertIntNonPositive(int x);
+<pre><code class="language-c">int assert_int_non_positive(int x);
 </code></pre>
 <p>Test that <code>x</code> is non-positive; that is, less than or equal to <code>0</code> (passes if <code>x &lt;= 0</code>).</p>
-<pre><code class="language-c">int assertIntPositive(int x);
+<pre><code class="language-c">int assert_int_positive(int x);
 </code></pre>
 <p>Test that <code>x</code> is positive; that is, greater than <code>0</code> (passes if <code>x &gt; 0</code>).</p>
-<pre><code class="language-c">int assertIntNegative(int x);
+<pre><code class="language-c">int assert_int_negative(int x);
 </code></pre>
 <p>Test that <code>x</code> is negative; that is, less than <code>0</code> (passes if <code>x &lt; 0</code>).</p>
 <h3 id="characters-&amp;-bytes">Characters &amp; bytes</h3>
-<pre><code class="language-c">int assertCharEqual(char c1, char c2);
+<pre><code class="language-c">int assert_char_equal(char c1, char c2);
 </code></pre>
-<pre><code class="language-c">int assertCharNotEqual(char c1, char c2);
+<pre><code class="language-c">int assert_char_not_equal(char c1, char c2);
 </code></pre>
 <p>Test that <code>c1</code> and <code>c2</code> are (or are not) equal.</p>
-<pre><code class="language-c">int assertByteEqual(unsigned char b1, unsigned char b2);
+<pre><code class="language-c">int assert_byte_equal(unsigned char b1, unsigned char b2);
 </code></pre>
-<pre><code class="language-c">int assertByteNotEqual(unsigned char b1, unsigned char b2);
+<pre><code class="language-c">int assert_byte_not_equal(unsigned char b1, unsigned char b2);
 </code></pre>
 <p>Test that <code>b1</code> and <code>b2</code> are (or are not) equal.</p>
 <h3 id="strings">Strings</h3>
-<pre><code class="language-c">int assertStringEqual(const char *s1, const char *s2);
+<pre><code class="language-c">int assert_string_equal(const char *s1, const char *s2);
 </code></pre>
 <p>Test that <code>s1</code> and <code>s2</code> are equal (passes if <code>strcmp(s1, s2) == 0</code>).</p>
-<pre><code class="language-c">int assertStringNotEqual(const char *s1, const char *s2);
+<pre><code class="language-c">int assert_string_not_equal(const char *s1, const char *s2);
 </code></pre>
 <p>Test that <code>s1</code> and <code>s2</code> are not equal (passes if <code>strcmp(s1, s2) != 0</code>).</p>
 <h2 id="special-assertions">Special assertions</h2>
 <h3 id="chaining-assertions">Chaining assertions</h3>
 <p>Chaining assertions is used to pass parameters to an existing check function. Let's say you defined a <code>rational</code> typedef and a <code>is_zero</code> function that tells if a <code>rational</code> is zero, returning a <code>bool</code>. To test if a rational <code>x</code> is zero, we could obviously use both <code>assertTrue</code> and <code>is_zero</code></p>
 <pre><code class="language-c">// Bad code
-assertTrue(is_zero(x));
+assert_true(is_zero(x));
 </code></pre>
 <p>This is a bad coding practice, because if the check fails we have no way to get back the value of x, and log it for example. Chained assertions were designed to solve this problem. To work with chained assertions we use two functions</p>
-<pre><code class="language-c">int assertChain(f, ...)
-int assertChainNot(f, ...)
+<pre><code class="language-c">int assert_chain(f, ...)
+int assert_chain_not(f, ...)
 </code></pre>
 <p>They apply the arguments in <code>...</code> to the function <code>f</code> that returns a <code>bool</code>, providing more insights than the previous method if the test fails. The previous code would be replaced by</p>
-<pre><code class="language-c">assertChain(is_zero, x);
+<pre><code class="language-c">assert_chain(is_zero, x);
 </code></pre>
 <p>Chained assertions work with multiple arguments too, so checking if two <code>rational</code> numbers <code>x</code> and <code>y</code> are equal would be fairly simple using a <code>are_equal</code> function</p>
-<pre><code class="language-c">assertChain(are_equal, x, y);
+<pre><code class="language-c">assert_chain(are_equal, x, y);
 </code></pre>
 <h3 id="custom-assertions">Custom assertions</h3>
 <p>The great thing about chained assertions is that it enables us to define custom assertions. To learn more about custom assertions, go to the <code>Custom assertions</code> page.</p>
@@ -282,11 +282,11 @@ int assertChainNot(f, ...)
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/confer/assets/katex.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/mermaid.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/elasticlunr.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/prism.js?v=1744069118"></script>
-    <script type="text/javascript" src="/confer/assets/doctave-app.js?v=1744069118"></script>
+    <script type="text/javascript" src="/confer/assets/katex.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/mermaid.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/elasticlunr.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/prism.js?v=1745364819"></script>
+    <script type="text/javascript" src="/confer/assets/doctave-app.js?v=1745364819"></script>
 
     
     <script type='text/javascript' src="/confer/assets/livereload.js?port=35729" async="" defer=""></script>

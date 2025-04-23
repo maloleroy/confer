@@ -1,5 +1,5 @@
 # AUTOMATICALLY GENERATED FILE. MODIFY WITH CAUTION.
-CONFER_PATH ?= $~/.local/share/confer
+CONFER_PATH ?= ~/.local/share/confer
 CC = gcc
 .PHONY : clean
 

@@ -24,69 +24,69 @@ static const char *hbar = "─", *vbar = "│", *branch = "├", *angle = "└",
 static const char *nbsp = " ";
 unsigned int TAB_SIZE = 4;
 
-static void printPadding(const char *head, const char *body);
-static char *getPaddingHead(struct cfScope *s, const unsigned int depth);
-static char *getPaddingBody(const unsigned int depth);
-static char *getScopeHead(struct cfScope *s);
-static void _cfPrintScopeAssertions(struct cfScope *s);
+static void print_padding(const char *head, const char *body);
+static char *get_padding_head(struct cfScope *s, const unsigned int depth);
+static char *get_padding_body(const unsigned int depth);
+static char *get_scope_head(struct cfScope *s);
+static void _cf_print_scope_assertions(struct cfScope *s);
 
-void _cfPrintAssertionFail(const char *file, const char *assertionType, const unsigned int line, const struct cfScope *scope)
+void _cf_print_assertion_fail(const char *file, const char *assertionType, const unsigned int line, const struct cfScope *scope)
 {
     printf("%s%s:%u%s: in function %s: %s", bold, file, line, end, scope->name, assertionType + 1);
 }
 
-int _cfReturnCode(struct cfScope *root)
+int _cf_return_code(struct cfScope *root)
 {
-    if (countAssertionsFailed(root) == 0)
+    if (count_assertions_failed(root) == 0)
     {
         return 0;
     }
     return 1;
 }
 
-int _cfPrintResults(struct cfScope *root)
+int _cf_print_results(struct cfScope *root)
 {
     puts("\nTotal:");
-    unsigned int passed = countAssertionsPassed(root);
-    unsigned int failed = countAssertionsFailed(root);
+    unsigned int passed = count_assertions_passed(root);
+    unsigned int failed = count_assertions_failed(root);
     if (passed)
         printf("%s %u passed main blocks\n%s %u passed assertions\n", checkMark,
-               countChildrenPassed(root), checkMark, passed);
+               count_children_passed(root), checkMark, passed);
     if (failed)
         printf("%s %u failed main blocks\n%s %u failed assertions\n", notCheckMark,
-               countChildrenFailed(root), notCheckMark, failed);
+            count_children_passed(root), notCheckMark, failed);
     if (!failed && !passed)
         fprintf(stderr, "WARNING: scope '%s' has no failed or passed blocks\n",
                 root->name);
     return 0;
 }
 
-void printTree(struct cfScope *s)
+void print_tree(struct cfScope *s)
 {
     if (s->parent != NULL)
         fprintf(stderr, "WARNING: node '%s' at %p has a parent '%s' at %p\n",
                 s->name, (void *)s, s->parent->name, (void *)s->parent);
-    printScope(s, 0);
+    print_scope(s, 0);
 }
 
-void printScope(struct cfScope *s, const int depth)
+void print_scope(struct cfScope *s, const int depth)
 {
     if (s == NULL)
         return;
     for (unsigned int i = depth; i; --i)
     {
-        printPadding(getPaddingHead(s, i), getPaddingBody(i));
+        print_padding(get_padding_head(s, i), get_padding_body(i));
         putc(' ', stdout);
     }
-    printf("%s %s", getScopeHead(s), s->name);
-    _cfPrintScopeAssertions(s);
+    printf("%s %s", get_scope_head(s), s->name);
+    _cf_print_scope_assertions(s);
     for (int i = 0; i < CF_MAX_CHILDREN; ++i)
     {
-        printScope(s->children[i], depth + 1);
+        print_scope(s->children[i], depth + 1);
     }
 }
 
-static void _cfPrintScopeAssertions(struct cfScope *s)
+static void _cf_print_scope_assertions(struct cfScope *s)
 {
     if (!s->assertions.passed && !s->assertions.failed)
     {
@@ -103,7 +103,7 @@ static void _cfPrintScopeAssertions(struct cfScope *s)
     puts(")");
 }
 
-static void printPadding(const char *head, const char *body)
+static void print_padding(const char *head, const char *body)
 {
     fputs(head, stdout);
     for (unsigned int i = 0; i < TAB_SIZE - 2; ++i)
@@ -112,20 +112,20 @@ static void printPadding(const char *head, const char *body)
     }
 }
 
-static char *getScopeHead(struct cfScope *s)
+static char *get_scope_head(struct cfScope *s)
 {
     static char head[13];
-    if (s->assertions.failed || hasChildrenWithErrors(s))
+    if (s->assertions.failed || has_children_with_errors(s))
         strcpy(head, notCheckMark);
     else
         strcpy(head, checkMark);
     return head;
 }
 
-static char *getPaddingHead(struct cfScope *s, const unsigned int depth)
+static char *get_padding_head(struct cfScope *s, const unsigned int depth)
 {
     static char head[4];
-    if (isLastChild(getParent(s, depth - 1)))
+    if (is_last_child(get_parent(s, depth - 1)))
     {
         if (depth == 1)
             strcpy(head, angle);
@@ -142,7 +142,7 @@ static char *getPaddingHead(struct cfScope *s, const unsigned int depth)
     return head;
 }
 
-static char *getPaddingBody(const unsigned int depth)
+static char *get_padding_body(const unsigned int depth)
 {
     static char body[4];
     if (depth == 1)

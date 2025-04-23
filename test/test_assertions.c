@@ -14,93 +14,93 @@ void test_chain_assertions(CFTEST);
 
 void test_assertions(CFTEST)
 {
-    cfTest(test_bool_assertions);
-    cfTest(test_pointers_assertions);
-    cfTest(test_int_assertions);
-    cfTest(test_char_assertions);
-    cfTest(test_byte_assertions);
-    cfTest(test_string_assertions);
-    cfTest(test_chain_assertions);
+    cf_test(test_bool_assertions);
+    cf_test(test_pointers_assertions);
+    cf_test(test_int_assertions);
+    cf_test(test_char_assertions);
+    cf_test(test_byte_assertions);
+    cf_test(test_string_assertions);
+    cf_test(test_chain_assertions);
 }
 
 void test_pointers_assertions(CFTEST)
 {
-    assertNull(NULL);
-    assertNull(0);
+    assert_null(NULL);
+    assert_null(0);
     int a = 3, b = 3;
     int *p = &a;
     int *q = &b;
     int *r = &b;
-    assertNotNull(p);
-    assertNotNull(&p);
+    assert_not_null(p);
+    assert_not_null(&p);
 
-    assertPointerEqual(q, r);
-    assertPointerNotEqual(p, q);
-    assertPointerNotEqual(p, r);
+    assert_pointer_equal(q, r);
+    assert_pointer_not_equal(p, q);
+    assert_pointer_not_equal(p, r);
 }
 
 void test_bool_assertions(CFTEST)
 {
-    assertTrue(true);
-    assertTrue(1);
-    assertTrue(2);
-    assertTrue(-6);
+    assert_true(true);
+    assert_true(1);
+    assert_true(2);
+    assert_true(-6);
 
-    assertFalse(0);
-    assertFalse(false);
+    assert_false(0);
+    assert_false(false);
 }
 
 void test_int_assertions(CFTEST)
 {
-    cfTest(test_int_equal);
-    cfTest(test_int_compare);
+    cf_test(test_int_equal);
+    cf_test(test_int_compare);
 }
 
 void test_int_equal(CFTEST)
 {
-    assertZero(2 - 2);
-    assertNonZero(2 - 3);
-    assertIntEqual(2 + 4, 6);
-    assertIntNotEqual(2 + 4, 5);
+    assert_zero(2 - 2);
+    assert_non_zero(2 - 3);
+    assert_int_equal(2 + 4, 6);
+    assert_int_not_equal(2 + 4, 5);
 }
 
 void test_int_compare(CFTEST)
 {
-    assertIntGe(3, 2);
-    assertIntGe(1, 1);
-    assertIntLe(2, 3);
-    assertIntLe(1, 1);
-    assertIntGreater(3, -2);
-    assertIntLess(-2, 3);
+    assert_int_ge(3, 2);
+    assert_int_ge(1, 1);
+    assert_int_le(2, 3);
+    assert_int_le(1, 1);
+    assert_int_greater(3, -2);
+    assert_int_less(-2, 3);
 }
 
 void test_char_assertions(CFTEST)
 {
     char a = 'a', b = 'b';
-    assertCharEqual(a, a);
-    assertCharEqual(b, b);
-    assertCharNotEqual(a, b);
-    assertCharNotEqual(b, a);
+    assert_char_equal(a, a);
+    assert_char_equal(b, b);
+    assert_char_not_equal(a, b);
+    assert_char_not_equal(b, a);
 }
 
 void test_byte_assertions(CFTEST)
 {
     unsigned char a = 12, b = 34;
-    assertCharEqual(a, a);
-    assertCharEqual(b, b);
-    assertCharNotEqual(a, b);
-    assertCharNotEqual(b, a);
+    assert_char_equal(a, a);
+    assert_char_equal(b, b);
+    assert_char_not_equal(a, b);
+    assert_char_not_equal(b, a);
 }
 
 void test_string_assertions(CFTEST)
 {
-    assertStringEqual("blah", "blah");
-    assertStringEqual("blah" + 1, "lah");
-    assertStringEqual("blah", "blah\0");
+    assert_string_equal("blah", "blah");
+    assert_string_equal("blah" + 1, "lah");
+    assert_string_equal("blah", "blah\0");
 
-    assertStringNotEqual("blah", "bleh");
-    assertStringNotEqual("blah", "lah");
-    assertStringNotEqual("blah", "bla");
+    assert_string_not_equal("blah", "bleh");
+    assert_string_not_equal("blah", "lah");
+    assert_string_not_equal("blah", "bla");
 }
 
 bool is_five(int n)
@@ -110,6 +110,6 @@ bool is_five(int n)
 
 void test_chain_assertions(CFTEST)
 {
-    assertChain(is_five, 5);
-    assertChainNot(is_five, 4);
+    assert_chain(is_five, 5);
+    assert_chain_not(is_five, 4);
 }

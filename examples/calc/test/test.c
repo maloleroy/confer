@@ -5,15 +5,15 @@ void test_operations(CFTEST);
 void test_plus(CFTEST);
 
 int main(void) {
-    cfInit();
-    cfTest(test_operations);
-    cfPrintCallTree();
+    cf_init();
+    cf_test(test_operations);
+    cf_print_call_tree();
     return 0;
 }
 
-void test_operations(CFTEST) { cfTest(test_plus); }
+void test_operations(CFTEST) { cf_test(test_plus); }
 
 void test_plus(CFTEST) {
-    assertIntEqual(plus(1, 2), 3);
-    assertIntNotEqual(plus(1, -2), 0);
+    assert_int_equal(plus(1, 2), 3);
+    assert_int_not_equal(plus(1, -2), 0);
 }

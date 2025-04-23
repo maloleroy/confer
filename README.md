@@ -63,16 +63,16 @@ Now, we're getting to the interesting part: **the tests!** The `add` function is
 #include <add.h>
 
 void test_add(CFTEST) {
-    assertIntEqual(add(1, 2), 3);
+    assert_int_equal(add(1, 2), 3);
 }
 
 int main(void) {
-    cfInit();
+    cf_init();
 
-    cfTest(test_add);
+    cf_test(test_add);
 
-    cfPrintCallTree();
-    return cfReturnCode();
+    cf_print_call_tree();
+    return cf_return_code();
 }
 ```
 

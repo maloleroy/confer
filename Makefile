@@ -1,6 +1,6 @@
 # AUTOMATICALLY GENERATED FILE. MODIFY WITH CAUTION.
 CONFER_PATH ?= ~/.local/share/confer
-CC = gcc
+CC ?= gcc
 .PHONY : clean
 
 OBJ_FILES = obj/assertions.o obj/build.o obj/children.o obj/print.o

@@ -107,9 +107,9 @@ fi
 echo -e "${color_blue}Installing in $INSTALL_DIR...${color_none}${color_faint}"
 
 # Clone the repository
-cd "$INSTALL_DIR" || exit
+mkdir -p "$INSTALL_DIR" && cd "$INSTALL_DIR" || exit
 git clone ${REPO_URL} . || {
-    echo "Failed to clone the repository. Please check your internet connection and try again."
+    echo "${color_none}${color_red}Failed to clone the repository. Please check your internet connection and try again.${color_none}"
     exit 1
 }
 
@@ -129,13 +129,13 @@ add_variables_in_rc_file() {
     {
         echo "export CONFER_PATH=$INSTALL_DIR"
         echo "export CONFER_COMMIT=$COMMIT"
-        echo "alias confer='$INSTALL_DIR/confer.py'"
+        echo "alias cf='$INSTALL_DIR/cf.py'"
     } >> $1 || {
         echo -e "${color_red}Failed to add environment variables to $1${color_none}"
         echo "Please add the following lines manually:"
         echo "export CONFER_PATH=$INSTALL_DIR"
         echo "export CONFER_COMMIT=$COMMIT"
-        echo "alias confer='$INSTALL_DIR/confer.py'"
+        echo "alias cf='$INSTALL_DIR/cf.py'"
         echo "If you are using a different shell, please add these lines to your shell's configuration file."
         exit 1
     }

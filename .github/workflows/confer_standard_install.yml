@@ -30,15 +30,14 @@ jobs:
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
         echo -e "2\ny" | ./install.sh
-        source ~/.bashrc
 
     - name: Create an example project
-      run: cf create example
+      run: source ~/.bashrc && cf create example
 
     - name: Run tests
       run: |
         cd example
-        cf test
+        source ~/.bashrc && cf test
 
 
   test-ubuntu:
@@ -61,15 +60,14 @@ jobs:
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
         echo -e "2\ny" | ./install.sh
-        source ~/.bashrc
 
     - name: Create an example project
-      run: cf create example
+      run: source ~/.bashrc && cf create example
 
     - name: Run tests
       run: |
         cd example
-        cf test
+        source ~/.bashrc && cf test
 
 
   test-macos:
@@ -92,12 +90,11 @@ jobs:
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
         echo -e "2\ny" | ./install.sh
-        source ~/.bashrc
 
     - name: Create an example project
-      run: cf create example
+      run: source ~/.bashrc && cf create example
 
     - name: Run tests
       run: |
         cd example
-        cf test
+        source ~/.bashrc && cf test

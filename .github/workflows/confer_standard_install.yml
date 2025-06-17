@@ -29,7 +29,7 @@ jobs:
       run: |
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
-        echo -e "2\ny" | ./install.sh
+        echo -e "2\ny" | sudo ./install.sh
 
     - name: Create an example project
       run: |
@@ -62,7 +62,7 @@ jobs:
       run: |
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
-        echo -e "2\ny" | ./install.sh
+        echo -e "2\ny" | sudo ./install.sh
 
     - name: Create an example project
       run: |
@@ -95,7 +95,7 @@ jobs:
       run: |
         curl -sL https://url.viarezo.fr/cf > install.sh
         chmod +x install.sh
-        echo -e "2\ny" | ./install.sh
+        echo -e "2\ny" | sudo ./install.sh
 
     - name: Create an example project
       run: |

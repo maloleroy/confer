@@ -1,0 +1,109 @@
+name: Confer Standard install CI
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  test-alpine:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine:latest
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apk add --no-cache \
+          bash \
+          curl \
+          git \
+          python3 \
+          build-base
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Confer from the network
+      run: |
+        curl -sL https://url.viarezo.fr/cf > install.sh
+        chmod +x install.sh
+        echo -e "2\ny" | sudo ./install.sh
+
+    - name: Create an example project
+      run: |
+        source ~/.bashrc
+        cf create example
+
+    - name: Run tests
+      run: |
+        cd example
+        source ~/.bashrc
+        cf test
+
+
+  test-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential gcc make python3
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Confer from the network
+      run: |
+        curl -sL https://url.viarezo.fr/cf > install.sh
+        chmod +x install.sh
+        echo -e "2\ny" | sudo ./install.sh
+
+    - name: Create an example project
+      run: |
+        source ~/.bashrc
+        cf create example
+
+    - name: Run tests
+      run: |
+        cd example
+        source ~/.bashrc
+        cf test
+
+
+  test-macos:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install build dependencies
+      run: |
+        # Xcode command line tools should be available by default
+        python3 --version
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Confer from the network
+      run: |
+        curl -sL https://url.viarezo.fr/cf > install.sh
+        chmod +x install.sh
+        echo -e "2\ny" | sudo ./install.sh
+
+    - name: Create an example project
+      run: |
+        source ~/.bashrc
+        cf create example
+
+    - name: Run tests
+      run: |
+        cd example
+        source ~/.bashrc
+        cf test
